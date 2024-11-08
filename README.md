@@ -3,6 +3,7 @@
 It is a data science project app which is uses patient's details to predict survival possiblity 
 from heart failure condition, It uses the 9 features of dataset it is trained on to predict the Death event
 of target patient. It uses Logistic regression and predicts result with over 80% accuracy.
+App is currently available at [link](https://heart-failure-survival-predictor-utfxrtng2bizauj8a7t9cb.streamlit.app/).
 
 ## Installation
 
