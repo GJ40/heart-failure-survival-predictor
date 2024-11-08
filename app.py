@@ -83,6 +83,16 @@ with tab1:
         # Visualize data 
         st.write("Position of the new data point among the training data:")
         plt.figure(figsize=(10, 6))
+        st.scatter_chart(
+            data=combined_data,
+            x="ejection_fraction",
+            x_label="ejection_fraction %" ,
+            y="serum_creatinine",
+            y_label="serum_creatinine mg/dL",
+            color="New Data"
+        )
+
+        _ = '''
         sns.scatterplot(
             data=combined_data,
             x="ejection_fraction",
@@ -92,10 +102,12 @@ with tab1:
             palette={"Existing": "blue", "New Data": "red"},
             markers={0: "o", 1: "X"}
         )
+        
         plt.title("Comparison of New Data with Training Data")
         plt.xlabel("Ejection Fraction (%)")
         plt.ylabel("Serum Creatinine (mg/dL)")
         st.pyplot(plt.gcf())
+        '''
 
 #with tab2:
 #    pass
