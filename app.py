@@ -29,10 +29,10 @@ def preprocess_input_data(data):
 
 
 # tabs
-tab1, tab2 = st.tabs(['Home', 'Charts'])
+tab1, tab2, tab3 = st.tabs(['Home', 'Charts', 'About'])
 with tab1:
-    st.title(":heart: Heart Failure Prediction")
-    st.markdown("### Enter patient details to predict heart failure outcome.")
+    st.title(":heart: Heart Failure Survial Predictor")
+    st.markdown("#### Enter patient details to predict heart failure outcome.")
 
     # Collect user input for each feature
     age = st.slider("Age", min_value=0, max_value=120, value=18)
@@ -82,6 +82,15 @@ with tab1:
 
         # Visualize data 
         st.write("Position of the new data point among the training data:")
+        st.scatter_chart(
+            data=combined_data,
+            x="ejection_fraction",
+            x_label="ejection_fraction %" ,
+            y="serum_creatinine",
+            y_label="serum_creatinine mg/dL",
+            color="New Data"
+        )
+        _ = """
         plt.figure(figsize=(10, 6))
         sns.scatterplot(
             data=combined_data,
@@ -96,6 +105,68 @@ with tab1:
         plt.xlabel("Ejection Fraction (%)")
         plt.ylabel("Serum Creatinine (mg/dL)")
         st.pyplot(plt.gcf())
+        """
 
-#with tab2:
-#    pass
+with tab2:
+    from math import ceil
+
+    page_size = 10
+    page_number = st.slider(
+        label="Page Number",
+        min_value=1,
+        max_value=ceil(len(training_data)/page_size),
+        step=1,
+    )
+    current_start = (page_number-1)*page_size
+    current_end = page_number*page_size
+    st.markdown("#### Dataset")
+    st.write(training_data[current_start:current_end])
+
+    st.markdown("---")
+
+with tab3:
+    st.markdown("""
+    ### Why there are only 9 parameters for prediction?
+
+    ---
+
+    ##### Answer
+    The decision to limit the feature set is likely driven by both medical relevance 
+    and statistical considerations to improve model performance.
+
+    ##### Medical and Statistical Basis for Feature Selection
+
+    """)
+    
+    with st.expander("Improved Model Accuracy and Performance"):
+        st.markdown("""
+        Feature selection helps to enhance the predictive power of machine learning models by focusing only on the most relevant variables. Including too many features, especially those that are not strongly correlated with the target outcome (like heart failure prediction), can introduce noise, overfitting, and increase computational complexity. Studies have shown that using feature selection methods such as statistical tests (t-tests, Chi-squared tests) can significantly improve prediction accuracy for clinical models by focusing on high-impact factors like age, blood pressure, and specific lab results (e.g., serum creatinine levels) rather than a broad, less targeted set of features​
+        """)
+    
+    with st.expander("Clinical Significance"):
+        st.markdown("""
+        When dealing with heart failure data, certain clinical indicators have a stronger association with patient outcomes. For instance:
+
+        - Age and serum creatinine are critical factors for assessing kidney function, which is a significant risk factor for heart failure.
+        - Ejection Fraction is a measure of how well the heart is pumping and is directly linked to heart health.
+        - Serum Sodium levels can indicate fluid retention, which is crucial in heart failure cases. Reducing the number of features to only the most medically relevant ones, such as these, helps focus the model on clinically significant predictors, leading to better interpretability and trust in the results from a healthcare perspective​
+
+        """)
+    
+    with st.expander("Benefits of Reducing Feature Count"):
+        st.markdown("""
+        - Computational Efficiency: Fewer features mean less computation, which is beneficial for deploying models in real-time applications like a Streamlit app.
+        - Improved Data Quality: It reduces the chances of missing values (NaNs) affecting the model, as seen in your error logs, where the model encountered NaN values not handled by the Logistic Regression algorithm.
+        - Easier Interpretation: Clinicians prefer models that are easier to interpret, especially for critical decisions. By using only the most impactful features, the model's decisions align better with medical understanding, making it more acceptable in a clinical setting​
+
+        """)
+    
+    st.markdown("""
+    ##### For more information you can visit:
+
+    - <a href="https://ieeexplore.ieee.org/document/10180853">IEEE Paper on Enhanced Heart Failure Prediction Using Feature Selection.</a>
+    
+    - <a href="https://journals.plos.org/">Feature Selection Techniques for Heart Failure Prediction by PLOS ONE.</a>
+
+    """, unsafe_allow_html=True)
+
