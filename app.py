@@ -92,6 +92,16 @@ with tab1:
         )
         _ = """
         plt.figure(figsize=(10, 6))
+        st.scatter_chart(
+            data=combined_data,
+            x="ejection_fraction",
+            x_label="ejection_fraction %" ,
+            y="serum_creatinine",
+            y_label="serum_creatinine mg/dL",
+            color="New Data"
+        )
+
+        _ = '''
         sns.scatterplot(
             data=combined_data,
             x="ejection_fraction",
@@ -101,10 +111,12 @@ with tab1:
             palette={"Existing": "blue", "New Data": "red"},
             markers={0: "o", 1: "X"}
         )
+        
         plt.title("Comparison of New Data with Training Data")
         plt.xlabel("Ejection Fraction (%)")
         plt.ylabel("Serum Creatinine (mg/dL)")
         st.pyplot(plt.gcf())
+<<<<<<< HEAD
         """
 
 with tab2:
@@ -169,4 +181,3 @@ with tab3:
     - <a href="https://journals.plos.org/">Feature Selection Techniques for Heart Failure Prediction by PLOS ONE.</a>
 
     """, unsafe_allow_html=True)
-
