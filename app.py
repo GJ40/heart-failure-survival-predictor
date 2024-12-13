@@ -31,7 +31,7 @@ def preprocess_input_data(data):
 # tabs
 tab1, tab2, tab3 = st.tabs(['Home', 'Charts', 'About'])
 with tab1:
-    st.title(":heart: Heart Failure Survial Predictor")
+    st.title(":heart: Heart Failure Survival Predictor")
     st.markdown("#### Enter patient details to predict heart failure outcome.")
 
     # Collect user input for each feature
